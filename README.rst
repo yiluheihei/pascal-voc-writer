@@ -7,7 +7,7 @@ file format.
 Install
 -------
 
-``pip install pascal-voc-writer``
+``pip install -e git+git@github.com:Labelbox/pascal-voc-writer.git@master``
 
 Use
 ---
@@ -17,9 +17,9 @@ Use
     writer = Writer('path/to/img.jpg', 800, 400)
 
 
-    # ::addObject(name, xmin, ymin, xmax, ymax)
+    # ::addObject(name, xy_coords)
 
-    writer.addObject('cat', 100, 100, 200, 200)
+    writer.addObject('cat', [100, 100, 200, 200])
 
 
     # ::save(path)
