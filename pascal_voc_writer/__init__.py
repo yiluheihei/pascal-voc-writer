@@ -3,8 +3,11 @@ from jinja2 import Environment, PackageLoader
 
 
 class Writer:
-    def __init__(self, path, width, height, depth=3, database='Unknown', segmented=0):
-        environment = Environment(loader=PackageLoader('pascal_voc_writer', 'templates'), keep_trailing_newline=True)
+    def __init__(self, path, width, height, depth=3,
+                 database='Unknown', segmented=0):
+        environment = Environment(
+            loader=PackageLoader('pascal_voc_writer', 'templates'),
+            keep_trailing_newline=True)
         self.annotation_template = environment.get_template('annotation.xml')
 
         abspath = os.path.abspath(path)
@@ -21,13 +24,25 @@ class Writer:
             'objects': []
         }
 
-    def addObject(self, name, xmin, ymin, xmax, ymax, pose='Unspecified', truncated=0, difficult=0):
+    # object can be bounding box or polygon
+    def addObject(self, name, xy_coords, pose='Unspecified',
+                  truncated=0, difficult=0):
+        # figure out if label is bounding box or polygon
+        if len(xy_coords) == 8:
+            xs = sorted(xy_coords[::2])
+            ys = sorted(xy_coords[1::2])
+            if (xs[0] == xs[1] and xs[2] == xs[3]
+                    and ys[0] == ys[1] and ys[2] == ys[3]):
+                label_type = 'bndbox'
+            else:
+                label_type = 'polygon'
+        else:
+            label_type = 'polygon'
+
         self.template_parameters['objects'].append({
             'name': name,
-            'xmin': xmin,
-            'ymin': ymin,
-            'xmax': xmax,
-            'ymax': ymax,
+            'type': label_type,
+            'xy_coords': xy_coords,
             'pose': pose,
             'truncated': truncated,
             'difficult': difficult,

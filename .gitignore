@@ -4,3 +4,6 @@
 *.egg
 *.egg-info
 /.eggs/
+test-results/
+*.sw[op]
+venv/
