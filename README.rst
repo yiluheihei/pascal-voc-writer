@@ -7,7 +7,7 @@ file format.
 Install
 -------
 
-``pip install -e git+git@github.com:Labelbox/pascal-voc-writer.git@master``
+``pip install -e git+https://github.com/Labelbox/pascal-voc-writer.git@master``
 
 Use
 ---
