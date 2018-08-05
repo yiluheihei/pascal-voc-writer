@@ -13,14 +13,10 @@ class Writer:
         abspath = os.path.abspath(path)
 
         self.template_parameters = {
-            'path': abspath,
             'filename': os.path.basename(abspath),
-            'folder': os.path.basename(os.path.dirname(abspath)),
+            'project': os.path.basename(os.path.dirname(abspath)),
             'width': width,
             'height': height,
-            'depth': depth,
-            'database': database,
-            'segmented': segmented,
             'objects': []
         }
 
